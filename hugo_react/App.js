@@ -156,18 +156,80 @@ render() {
                     </div>
                 </div>
 
+                <div className="g-cards">
+                    {this.state.searchResult?.slice((this.state.paginationActivePage * this.state.pageSize) - this.state.pageSize, this.state.paginationActivePage * this.state.pageSize).map((item, index) => (
+                        <div key={item.id} id={item.id}>
 
+                            {   index !== 4?
+                                <div className="base-listing">
+                                    <a rel="noreferrer" target="_blank" href={"https://autopreferred.chase.com/detail?vin=" + item.vin + "&make=" + item.make + "&model=" + item.model + "&year=" + item.year + "&zip=" + item.dealer?.zip + "&vehicle_condition=" + item.condition + "&offercode=WDXDUXXX28"} className="content-detail">
+                                        <div className="image">
+                                            <img src={item.image} />
+                                        </div>
+                                        <div className="info">
+                                            <h3 className="title u-ellipsis">{item.year} {item.make} {item.model} {item.trim}</h3>
+                                            <div className="u-nowrap">
+                                                <div className="price">${item.price?.toLocaleString('en-US')} </div><div className="mileage"> {item.mileage?.toLocaleString('en-US')} <span className="u-fs12">mi</span></div>
+                                                <div className="dealer">
+                                                    <div className="u-ellipsis">
+                                                        <span className="dealer-name u-fw600 u-mr3"> {item.dealer.name} </span>
+                                                        <span className="dealer-location"> {item.dealer.city}, {item.dealer.state} </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                :
+                                <div className="card">
+                                    <div className="card-img-wrap">
+                                        <img src="assets/images/spot-money.6346c080.svg" />
+                                    </div>
+                                    <p className="card-text"> Learn how much you can afford </p>
+                                    <p className="card-para">
+                                        Share a few details to get prequalified with no impact to your credit score.
+                                        <a href="#prequal-disclosure">*</a>
+                                    </p>
+                                    <a target="_blank" rel="noreferrer" href="https://www.chase.com/auto/prequalified?offercode=WDPQLXXX13" className="g-button">
+                                        Get prequalified <span className="u-sr">, opens in a new window</span>
+                                    </a>
+                                    <br/>
+                                    <br/>
+                                </div>
+                            }
+                        </div>
+                    ))}
+                </div>
 
+                <div>
+                    <br/>
+                    <br/>
+                    <div className="search-pagination">
+                        <TuxPagination 
+                            activePage={this.state.paginationActivePage}
+                            boundaryLinks
+                            numPages={this.state.searchResult?.length/20}
+                            numPageLinks={5}
+                            onChange={value => this.setSate({ paginationActivePage: value})}
+                        />
+                        <p className="count"> {((this.state.paginationActivePage * this.state.pageSize) - this.state.pageSize) + 1} - {this.state.paginationActivePage * this.state.pageSize} of {(this.state.searchResult.length).toLocaleString('en-US')} Vehicles </p>
+                    </div>
+                </div>
+
+                <Switch>
+                    {/* Routes go here */}
+                </Switch>
             </main>
 
-
-
+            <TuxGlobalFooter links={links}>
+                <p>
+                    &copy;{currentyear} Chase &amp; All rights
+                    reserved.
+                </p>
+            </TuxGlobalFooter>
 
         </BrowserRouter>
-
-
     );
-
 });
 
 export default App;
